@@ -80,10 +80,8 @@ function listFiles(auth) {
     if (err) return console.log('The API returned an error: ' + err);
     const files = res.data.files;
     if (files.length) {
-      console.log('Files:');
-      files.map((file) => {
-        console.log(`${file.name} (${file.id})`);
-      });
+      console.log(files[0].id);
+      return files[0].id;
     } else {
       console.log('No files found.');
     }

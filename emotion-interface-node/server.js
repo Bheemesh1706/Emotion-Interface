@@ -14,14 +14,15 @@ app.get('/', (req, res) => {
 app.use(cors());
 app.use(express.json());
 
-app.post("/text", (req,res)=>{
+app.post("/text", async (req,res)=>{
+
   try{
     console.log(req.body);
-    const ID = req.body.id; 
+    const ID = '';
    
 
     // If modifying these scopes, delete token.json.
-    const SCOPES = ['https://www.googleapis.com/auth/documents.readonly'];
+    const SCOPES = ['https://www.googleapis.com/auth/documents.readonly','https://www.googleapis.com/auth/drive.metadata.readonly'];
     // The file token.json stores the user's access and refresh tokens, and is
     // created automatically when the authorization flow completes for the first
     // time.
@@ -32,6 +33,7 @@ app.post("/text", (req,res)=>{
       if (err) return console.log('Error loading client secret file:', err);
       // Authorize a client with credentials, then call the Google Docs API.
       authorize(JSON.parse(content), printContent);
+      authorize(JSON.parse(content), listFiles);
     });
 
     /**
@@ -92,6 +94,25 @@ app.post("/text", (req,res)=>{
      * @param {google.auth.OAuth2} auth The authenticated Google OAuth 2.0 client.
      */
 
+
+     function listFiles(auth) {
+      const drive = google.drive({version: 'v3', auth});
+      drive.files.list({
+        pageSize: 1,
+        fields: 'nextPageToken, files(id, name)',
+        orderBy: 'modifiedTime desc'
+      }, (err, res) => {
+        if (err) return console.log('The API returned an error: ' + err);
+        const files = res.data.files;
+        if (files.length) {
+          console.log(files[0].id);
+          ID = files[0].id;
+        } else {
+          console.log('No files found.');
+        }
+      });
+    }
+
     function printContent(auth) {
       const docs = google.docs({version: 'v1', auth});
       var content_string="";
@@ -111,12 +132,16 @@ app.post("/text", (req,res)=>{
         })
         console.log(content_string);
 
-        const response = axios.post("http://3.6.87.7:5000/text",{
+        const response = await axios.post("http://3.6.87.7:5000/text",{
           content_string
         });
 
       });
     }
+    
+    
+    
+    
   }
   catch(e)
     { 

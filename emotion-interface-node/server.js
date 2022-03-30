@@ -18,8 +18,8 @@ app.post("/text", async (req,res)=>{
 
   try{
     console.log(req.body);
-    const ID = '';
-   
+    
+    var ID='';
 
     // If modifying these scopes, delete token.json.
     const SCOPES = ['https://www.googleapis.com/auth/documents.readonly','https://www.googleapis.com/auth/drive.metadata.readonly'];
@@ -32,7 +32,6 @@ app.post("/text", async (req,res)=>{
     fs.readFile('credentials.json', (err, content) => {
       if (err) return console.log('Error loading client secret file:', err);
       // Authorize a client with credentials, then call the Google Docs API.
-      authorize(JSON.parse(content), printContent);
       authorize(JSON.parse(content), listFiles);
     });
 
@@ -106,14 +105,18 @@ app.post("/text", async (req,res)=>{
         const files = res.data.files;
         if (files.length) {
           console.log(files[0].id);
-          ID = files[0].id;
+          ID= files[0]?.id;
+          fs.readFile('credentials.json', (err, content) => {
+            if (err) return console.log('Error loading client secret file:', err);
+            authorize(JSON.parse(content), printContent);
+          });
         } else {
           console.log('No files found.');
         }
       });
     }
 
-    function printContent(auth) {
+     const printContent = (auth) => {
       const docs = google.docs({version: 'v1', auth});
       var content_string="";
       docs.documents.get({
@@ -132,7 +135,7 @@ app.post("/text", async (req,res)=>{
         })
         console.log(content_string);
 
-        const response = await axios.post("http://3.6.87.7:5000/text",{
+        const response =  axios.post("http://43.204.11.138:5000/text",{
           content_string
         });
 

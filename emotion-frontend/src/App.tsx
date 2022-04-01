@@ -11,7 +11,7 @@ function App() {
       <Text size={"40px"} >Emotions</Text>
       <InfoContainer>
         <Text size={"20px"} > Current Emotion : </Text>
-        <Text >Happy</Text>
+        <Text >Surprise</Text>
       </InfoContainer>
     </BarContainerHead>
     <BarGraph>

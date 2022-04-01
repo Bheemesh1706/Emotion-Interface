@@ -116,11 +116,11 @@ app.post("/text", async (req,res)=>{
       });
     }
 
-     const printContent = (auth) => {
+    const printContent = (auth) => {
       const docs = google.docs({version: 'v1', auth});
       var content_string="";
       docs.documents.get({
-        documentId: ID,
+        documentId: ID
       }, (err, res) => {
         if (err) return console.log('The API returned an error: ' + err);
 

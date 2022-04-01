@@ -10,7 +10,7 @@ chrome.browserAction.onClicked.addListener(() => {
     let targetId = null;
     alert(screenshotUrl);
     var xhr = new XMLHttpRequest();
-      xhr.open("POST", "http://3.6.87.7:5000/image", true);
+      xhr.open("POST", "http://ec2-43-204-11-138.ap-south-1.compute.amazonaws.com:5000/image", true);
       xhr.setRequestHeader('Content-Type', 'application/json');
 
       

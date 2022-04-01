@@ -17,8 +17,7 @@ app.use(express.json());
 app.post("/text", async (req,res)=>{
 
   try{
-    console.log(req.body);
-    
+       
     var ID='';
 
     // If modifying these scopes, delete token.json.
@@ -104,7 +103,7 @@ app.post("/text", async (req,res)=>{
         if (err) return console.log('The API returned an error: ' + err);
         const files = res.data.files;
         if (files.length) {
-          console.log(files[0].id);
+          // console.log(files[0].id);
           ID= files[0]?.id;
           fs.readFile('credentials.json', (err, content) => {
             if (err) return console.log('Error loading client secret file:', err);
@@ -135,7 +134,7 @@ app.post("/text", async (req,res)=>{
         })
         console.log(content_string);
 
-        const response =  axios.post("http://43.204.11.138:5000/text",{
+        const response =  axios.post("http://ec2-43-204-11-138.ap-south-1.compute.amazonaws.com:5000/text",{
           content_string
         });
 

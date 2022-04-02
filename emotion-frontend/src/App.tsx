@@ -7,25 +7,25 @@ function App() {
   return (
 <MainContainer>
   <BarContainer>
-    <BarContainerHead>
-      <Text size={"40px"} >Emotions</Text>
-      <InfoContainer>
-        <Text size={"20px"} > Current Emotion : </Text>
-        <Text >Happy</Text>
-      </InfoContainer>
-    </BarContainerHead>
-    <BarGraph>
-      <Emotion/>
-    </BarGraph>  
+      <BarContainerHead>
+        <Text size={"40px"} >Emotions</Text>
+        <InfoContainer>
+          <Text size={"20px"} > Current Emotion : </Text>
+          <Text >Happy</Text>
+        </InfoContainer>
+      </BarContainerHead>
+      <BarGraph>
+        <Emotion/>
+      </BarGraph>  
   </BarContainer>
 
   <TextContainer>
-  <Text style={{marginBottom: "10px"}}>Topics</Text>
-    <TextBox>
-      <ListContainer>
-        <Text>Title</Text>
-      </ListContainer>
-    </TextBox>
+    <Text style={{marginBottom: "10px"}}>Topics</Text>
+      <TextBox>
+        <ListContainer>
+          <Text>Title</Text>
+        </ListContainer>
+      </TextBox>
   </TextContainer>
 </MainContainer>
   );
@@ -66,11 +66,13 @@ const BarContainerHead = styled.div`
 
 const InfoContainer = styled.div`
   height: 25%;
-  width: 50%;
+  width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
- 
+  @media (max-width: 720px) {
+    margin-bottom: 10px;
+  }
 `;
 
 const BarGraph = styled.section`
@@ -83,10 +85,12 @@ const TextContainer = styled.div`
   width: 40%;
   display: flex;
   flex-direction: column;
-  justify-content:center;
+  justify-content:flex-start;
   align-items: flex-start;
+  margin-top:16px;
   @media (max-width: 720px) {
    min-width: 100%;
+   margin-left: 60px;
   }
 `;
 

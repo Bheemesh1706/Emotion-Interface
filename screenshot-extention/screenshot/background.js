@@ -1,19 +1,38 @@
 
+function takescreenshot(){ 
+   chrome.extension.getBackgroundPage().console.log('foo');
+   chrome.alarms.create("1st", {
+    delayInMinutes: 1,
+    periodInMinutes: 1
+  });
+  
+chrome.alarms.onAlarm.addListener(function(alarm) {
+  if (alarm.name === "1st") {
+    chrome.tabs.captureVisibleTab((screenshotUrl) => 
+ {
+   alert(screenshotUrl);
+   fetch("http://192.168.1.9:5001/image", {
+    method: "POST",
+    body: JSON.stringify({ Image:screenshotUrl.slice(23,screenshotUrl.length) }),
+    headers: {
+        "Content-type": "application/json; charset=UTF-8"
+    }
+  }).then(response => response.json()).then(json => chrome.extension.getBackgroundPage().console.log(json));
+  }
+);
+  }
+});
+   
+}
 
-document.getElementById('on').addEventListener('click',function(){
-     var xhr = new XMLHttpRequest();
-      setInterval(chrome.tabs.captureVisibleTab((screenshotUrl) => {
-      //  alert(screenshotUrl);
-      xhr.open("POST", "http://ec2-43-204-11-138.ap-south-1.compute.amazonaws.com:5000/image", true);
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.send(JSON.stringify({ Image:screenshotUrl.slice(23,screenshotUrl.length) }));
-     })
-    ,10000);
-
+document.getElementById('on').addEventListener('click',function(event){
+      takescreenshot();
  });
 
  document.getElementById('off').addEventListener('click',function(){
-    clearInterval(1);
+  chrome.alarms.clear("1st").then((e)=>{
+    chrome.extension.getBackgroundPage().console.log(e);
+  })
 });
   
   // chrome.tabs.captureVisibleTab((screenshotUrl) => {

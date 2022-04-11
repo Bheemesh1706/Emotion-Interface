@@ -21,7 +21,8 @@
     },
     "permissions": [
         "activeTab",
-        "http://*/*"
+        "http://*/*",
+        "alarms"
     ],
     "manifest_version": 2
 }

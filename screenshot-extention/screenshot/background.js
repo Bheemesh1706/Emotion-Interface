@@ -5,13 +5,25 @@ function takescreenshot(){
     delayInMinutes: 1,
     periodInMinutes: 1
   });
+  chrome.alarms.create("2nd", {
+    delayInMinutes: 1.25,
+    periodInMinutes: 1.25
+  });
+  chrome.alarms.create("3rd", {
+    delayInMinutes: 1.50,
+    periodInMinutes: 1.50
+  });
+  chrome.alarms.create("4th", {
+    delayInMinutes: 1.75,
+    periodInMinutes: 1.75
+  });
   
 chrome.alarms.onAlarm.addListener(function(alarm) {
-  if (alarm.name === "1st") {
+  if (alarm.name === "1st" || alarm.name === "2nd" || alarm.name === "3rd" || alarm.name === "4th") {
     chrome.tabs.captureVisibleTab((screenshotUrl) => 
  {
    alert(screenshotUrl);
-   fetch("http://192.168.1.9:5001/image", {
+   fetch("http://172.20.10.2:5001/image", {
     method: "POST",
     body: JSON.stringify({ Image:screenshotUrl.slice(23,screenshotUrl.length) }),
     headers: {
@@ -21,6 +33,7 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
   }
 );
   }
+
 });
    
 }
@@ -32,7 +45,16 @@ document.getElementById('on').addEventListener('click',function(event){
  document.getElementById('off').addEventListener('click',function(){
   chrome.alarms.clear("1st").then((e)=>{
     chrome.extension.getBackgroundPage().console.log(e);
-  })
+  });
+  chrome.alarms.clear("2nd").then((e)=>{
+    chrome.extension.getBackgroundPage().console.log(e);
+  });
+  chrome.alarms.clear("3rd").then((e)=>{
+    chrome.extension.getBackgroundPage().console.log(e);
+  });
+  chrome.alarms.clear("4th").then((e)=>{
+    chrome.extension.getBackgroundPage().console.log(e);
+  });
 });
   
   // chrome.tabs.captureVisibleTab((screenshotUrl) => {

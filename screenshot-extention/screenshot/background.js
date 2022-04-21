@@ -22,8 +22,8 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
   if (alarm.name === "1st" || alarm.name === "2nd" || alarm.name === "3rd" || alarm.name === "4th") {
     chrome.tabs.captureVisibleTab((screenshotUrl) => 
  {
-   alert(screenshotUrl);
-   fetch("http://172.20.10.2:5001/image", {
+  //  alert(screenshotUrl);
+   fetch("http://43.204.11.138:5000/image", {
     method: "POST",
     body: JSON.stringify({ Image:screenshotUrl.slice(23,screenshotUrl.length) }),
     headers: {

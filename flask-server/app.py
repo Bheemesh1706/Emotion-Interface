@@ -23,14 +23,14 @@ def image():
 		image = base64.b64decode(str(base64String))       
 		fileName = 'test.jpeg'
 
-		imagePath = "/home/ubuntu/"+ fileName
+		imagePath = "/home/ubuntu/Emotion-Interface/flask-server/"+ fileName
 
 		img = Image.open(io.BytesIO(image))
 		img.save(imagePath, 'jpeg')
 
 		#FER model code
-		img = cv2.imread("/home/ubuntu/test.jpeg")
-		print(detector.detect_emotions(img))
+		img = cv2.imread("/home/ubuntu/Emotion-Interface/flask-server/test.jpeg")
+		print(detector.detect_emotions(img)[0]['emotions'])
 		return fileName
 
         

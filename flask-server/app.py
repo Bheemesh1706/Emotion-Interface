@@ -1,4 +1,4 @@
-from flask import Flask ,request, abort, jsonify
+from flask import Flask ,request, abort, jsonify 
 from datetime import datetime
 import requests as req
 import json
@@ -7,6 +7,8 @@ from PIL import Image
 import io
 from fer import FER
 import cv2
+import requests
+import ldadeployment
 
 app = Flask(__name__)
 
@@ -30,9 +32,10 @@ def image():
 
 		#FER model code
 		img = cv2.imread("/home/ubuntu/Emotion-Interface/flask-server/test.jpeg")
-		print(detector.detect_emotions(img)[0]['emotions'])
-		return fileName
-
+		res = detector.detect_emotions(img)[0]['emotions']
+		print(res)
+		req = requests.post("http://43.204.11.138:3001/image", json=res)
+		return jsonify(res)
         
 	else:
 		abort(400)
@@ -42,7 +45,8 @@ def text():
 
 	if request.method == "POST":
 		data = request.json
-		print(data)
+		print(ldadeployment.topic_predictor(data))
+		#print(data)
 		return jsonify(data)
         
 	else:

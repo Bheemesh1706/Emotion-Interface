@@ -32,8 +32,11 @@ def image():
 
 		#FER model code
 		img = cv2.imread("/home/ubuntu/Emotion-Interface/flask-server/test.jpeg")
-		res = detector.detect_emotions(img)[0]['emotions']
-		print(res)
+		try:
+			res = detector.detect_emotions(img)[0]['emotions']
+			print(res)
+		except:
+			print("most likely no face in pic")
 		req = requests.post("http://43.204.11.138:3001/image", json=res)
 		return jsonify(res)
         

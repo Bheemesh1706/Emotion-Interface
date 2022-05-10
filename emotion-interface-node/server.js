@@ -164,11 +164,11 @@ app.post("/text", async (req,res)=>{
 
 app.post("/image", async (req,res)=>{
 
+
   try{
    
     var ID='';
-    const {Data} = req.body;
-
+    const Data = req.body;
     // If modifying these scopes, delete token.json.
     const SCOPES = ['https://www.googleapis.com/auth/documents.readonly','https://www.googleapis.com/auth/drive.metadata.readonly'];
     // The file token.json stores the user's access and refresh tokens, and is
@@ -252,7 +252,7 @@ app.post("/image", async (req,res)=>{
         if (err) return console.log('The API returned an error: ' + err);
         const files = res.data.files;
         if (files.length) {
-          // console.log(files[0].id);
+          console.log(files[0].id);
           ID= files[0]?.id;
           fs.readFile('credentials.json', (err, content) => {
             if (err) return console.log('Error loading client secret file:', err);
@@ -264,25 +264,12 @@ app.post("/image", async (req,res)=>{
       });
     }
 
-    const AppendContent = () => {
-      Image.updateOne(
-        { _id: ID},
-        {
-          $set: Data
-        },
-        {
-         upsert: true, useFindAndModify: false 
-        }
-      ).exec ((err, image) =>{
-        if(err){
-         console.log(err);
-         res.status(400).send({ status: false, message: "Error" });
-         
-        }
-        if(image){
-         res.status(200).send({ status: true, message: "Updated!" });
-        }
-      } );
+    const AppendContent = async() => {
+      const createImage = await Image.create({
+        Id:ID,
+        Data:[Data]
+      });
+      res.status(200).json({ image_id: createImage._id });
     }
     
   }

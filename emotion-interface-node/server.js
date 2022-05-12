@@ -167,13 +167,14 @@ app.post("/text", async (req,res)=>{
     }
 })
 
-app.post("/Text", async (req,res)=>{
+app.post("/text-db", async (req,res)=>{
 
 
   try{
    
     var ID='';
-    const Data = req.body;
+     const Data = req.body;
+    
     // If modifying these scopes, delete token.json.
     const SCOPES = ['https://www.googleapis.com/auth/documents.readonly','https://www.googleapis.com/auth/drive.metadata.readonly'];
     // The file token.json stores the user's access and refresh tokens, and is

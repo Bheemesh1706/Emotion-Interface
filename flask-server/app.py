@@ -19,19 +19,17 @@ def image():
 
 	if request.method == "POST":
 		detector = FER(mtcnn=True)
-
 		data = request.json
 		base64String = data['Image']
-		image = base64.b64decode(str(base64String))       
+
+		image = base64.b64decode(str(base64String)) 
 		fileName = 'test.jpeg'
-
 		imagePath = "/home/ubuntu/Emotion-Interface/flask-server/"+ fileName
-
 		img = Image.open(io.BytesIO(image))
 		img.save(imagePath, 'jpeg')
+		img = cv2.imread("/home/ubuntu/Emotion-Interface/flask-server/test.jpeg")
 
 		#FER model code
-		img = cv2.imread("/home/ubuntu/Emotion-Interface/flask-server/test.jpeg")
 		try:
 			res = detector.detect_emotions(img)[0]['emotions']
 			print(res)

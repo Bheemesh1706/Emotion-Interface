@@ -46,7 +46,14 @@ def text():
 
 	if request.method == "POST":
 		data = request.json		
-		print(ldadeployment.topic_predictor(data["content_string"]))
+		#print(ldadeployment.topic_predictor(data["content_string"]))
+
+		try:
+			res1 = ldadeployment.topic_predictor(data["content_string"])
+			print(res1)
+		except:
+			print("Error")
+		req1 = requests.post("http://43.204.11.138:3001/Text", json=res1)
 
 		#print(type(data["content_string"]))
 		return jsonify(data)

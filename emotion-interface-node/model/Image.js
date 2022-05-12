@@ -5,10 +5,14 @@ const schemaImage = new mongoose.Schema({
         type: String,
         required: true
     },
-    Data: [{
-        type: Object,
-        require: true
-    }]
+    Angry: { type : Number, required: true },
+    Disgust: { type : Number, required: true },
+    Fear: { type : Number, required: true },
+    Happy: { type : Number, required: true },
+    Sad: { type : Number, required: true },
+    Suprise: { type : Number, required: true },
+    Neutral: { type : Number, required: true }
+    
 });
 
 module.exports = mongoose.model("Image", schemaImage);

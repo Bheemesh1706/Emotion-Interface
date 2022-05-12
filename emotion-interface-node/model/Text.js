@@ -5,10 +5,18 @@ const schemaText = new mongoose.Schema({
         type: String,
         required: true
     },
-    Data: [{
+    Topic1: {
         type: String,
         require: true
-    }]
+    },
+    Topic2: {
+        type: String,
+        require: true
+    },
+    Topic3: {
+        type: String,
+        require: true
+    }
 });
 
 module.exports = mongoose.model("Text", schemaText);

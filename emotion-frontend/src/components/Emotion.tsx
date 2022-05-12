@@ -1,4 +1,6 @@
 import {Bar} from 'react-chartjs-2';
+import { useEffect, useState } from 'react';
+import { GetImageData } from '../api/backend';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -20,6 +22,14 @@ ChartJS.register(
 
 
 function Emotion() {
+
+    const [graphdata,setGraphData] = useState<any>();
+
+    useEffect(()=>{
+        GetImageData().then((e)=>{
+          setGraphData(e)
+        });
+    })
     const options = {
         responsive: true,
         plugins: {
@@ -33,14 +43,14 @@ function Emotion() {
         },
       };
       
-      const labels = ['Angry', 'Sad', 'Disgust', 'Neutral', 'Happy', 'Suprise'];
+      const labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Suprise' ,'Neutal'];
       
       const data = {
         labels,
         datasets: [
           {
             label: 'Emotions',
-            data: [1,2,3,4,5,6],
+            data: [graphdata?.angry*10,graphdata?.disgust*10,graphdata?.fear*10,graphdata?.happy*10,graphdata?.sad*10,graphdata?.suprise*10,graphdata?.neutral*10],
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
           }
         ],

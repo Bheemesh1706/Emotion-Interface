@@ -1,9 +1,32 @@
 import styled from 'styled-components';
 import Emotion from './components/Emotion';
 import { Custom } from './components/Interface';
-
-
+import { useState,useEffect } from 'react';
+import { GetTextData,GetImageData } from './api/backend';
 function App() {
+
+  const [textData,setTextData]= useState([]);
+  const [graphdata,setGraphData] = useState<any>();
+  const [currentMood,setCurrentMood] = useState<String>();
+  useEffect(()=>{
+    GetTextData().then((e)=>{
+      setTextData(e);
+    });
+    GetImageData().then((e)=>{
+      setGraphData(e)
+    });
+  });
+  useEffect(()=>{
+    let max=0;
+    for (const item in  graphdata) {
+      if(graphdata[item]>max)
+      {
+        max = graphdata[item];
+        setCurrentMood(item);
+      }
+    }
+  },[graphdata])
+
   return (
 <MainContainer>
   <BarContainer>
@@ -11,7 +34,7 @@ function App() {
         <Text size={"40px"} >Emotions</Text>
         <InfoContainer>
           <Text size={"20px"} > Current Emotion : </Text>
-          <Text >Happy</Text>
+          <Text >{currentMood?.toUpperCase()}</Text>
         </InfoContainer>
       </BarContainerHead>
       <BarGraph>
@@ -22,9 +45,9 @@ function App() {
   <TextContainer>
     <Text style={{marginBottom: "10px"}}>Topics</Text>
       <TextBox>
-        <ListContainer>
-          <Text>Title</Text>
-        </ListContainer>
+    {textData?.map((data:any)=><> <ListContainer><Text size={"12px"}>{data.Topic1}</Text></ListContainer>
+    <ListContainer><Text size={"12px"}>{data.Topic2}</Text></ListContainer>
+    <ListContainer><Text size={"12px"}>{data.Topic3}</Text></ListContainer></>)}
       </TextBox>
   </TextContainer>
 </MainContainer>
@@ -127,6 +150,7 @@ const Text = styled.p<Custom>`
   }};
   margin: 0;
   margin-right: 10px;
+  text-align: center;
 `;
 
 

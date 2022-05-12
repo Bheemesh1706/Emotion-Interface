@@ -47,9 +47,10 @@ def image():
 def text():
 
 	if request.method == "POST":
-		data = request.json
-		print(ldadeployment.topic_predictor(data))
-		#print(data)
+		data = request.json		
+		print(ldadeployment.topic_predictor(data["content_string"]))
+
+		#print(type(data["content_string"]))
 		return jsonify(data)
         
 	else:

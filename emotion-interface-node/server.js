@@ -29,6 +29,7 @@ app.use(express.json());
 
 app.post("/text", async (req,res)=>{
 
+
   try{
        
     var ID='';
@@ -152,11 +153,10 @@ app.post("/text", async (req,res)=>{
 	          body: JSON.stringify({  content_string: content_string }),
 	          headers: {'Content-Type': 'application/json'}
           });
-
       });
+
+      res.status(200).json({ sucess_message: "Extracted" });
     }
-    
-    
     
     
   }

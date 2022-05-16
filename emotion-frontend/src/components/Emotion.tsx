@@ -43,14 +43,14 @@ function Emotion() {
         },
       };
       
-      const labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Suprise' ,'Neutal'];
+      const labels = ['Angry', 'Disgust', 'Fear', 'Happy', 'Sad', 'Surprise' ,'Neutal'];
       
       const data = {
         labels,
         datasets: [
           {
             label: 'Emotions',
-            data: [graphdata?.angry*10,graphdata?.disgust*10,graphdata?.fear*10,graphdata?.happy*10,graphdata?.sad*10,graphdata?.suprise*10,graphdata?.neutral*10],
+            data: [graphdata?.Angry*10,graphdata?.Disgust*10,graphdata?.Fear*10,graphdata?.Happy*10,graphdata?.Sad*10,graphdata?.Surprise*10,graphdata?.Neutral*10],
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
           }
         ],

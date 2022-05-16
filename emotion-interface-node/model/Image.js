@@ -10,7 +10,7 @@ const schemaImage = new mongoose.Schema({
     Fear: { type : Number, required: true },
     Happy: { type : Number, required: true },
     Sad: { type : Number, required: true },
-    Suprise: { type : Number, required: true },
+    Surprise: { type : Number, required: true },
     Neutral: { type : Number, required: true }
     
 });

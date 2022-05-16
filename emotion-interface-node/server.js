@@ -296,8 +296,8 @@ app.post("/image", async (req,res)=>{
   try{
    
     var ID='';
-    //const Data = req.body;
-    const Data = {"angry":0.9,"disgust":0.65,"fear":0.2,"happy":1,"sad":0.3,"suprise":0.5,"neutral":0.4}
+    const Data = req.body;
+    // const Data = {"angry":0.9,"disgust":0.65,"fear":0.2,"happy":1,"sad":0.3,"suprise":0.5,"neutral":0.4}
 
     // If modifying these scopes, delete token.json.
     const SCOPES = ['https://www.googleapis.com/auth/documents.readonly','https://www.googleapis.com/auth/drive.metadata.readonly'];
@@ -404,7 +404,7 @@ app.post("/image", async (req,res)=>{
         Fear: Data?.fear,
         Happy: Data?.happy,  
         Sad: Data?.sad,
-        Suprise: Data?.suprise,
+        Surprise: Data?.surprise,
         Neutral: Data?.neutral
       });
       res.status(200).json({ image_id: createImage._id });

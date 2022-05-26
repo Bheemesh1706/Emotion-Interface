@@ -13,6 +13,10 @@ const schemaImage = new mongoose.Schema({
     Surprise: { type : Number, required: true },
     Neutral: { type : Number, required: true }
     
-});
+},
+{
+    timestamps: true,  
+}
+);
 
 module.exports = mongoose.model("Image", schemaImage);

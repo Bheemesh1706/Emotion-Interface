@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 import Emotion from './components/Emotion';
+import TimeGraph from './components/TimeGraph';
+import Sentiment from './components/Sentiment';
 import { Custom } from './components/Interface';
 import { useState,useEffect } from 'react';
 import { GetTextData,GetImageData } from './api/backend';
+import axios from "axios";
 function App() {
 
   const [textData,setTextData]= useState([]);
@@ -27,11 +30,19 @@ function App() {
     }
   },[graphdata])
 
+  useEffect(()=>{
+    setInterval(async () => {
+      const request = await axios.post("http://43.204.11.138:3001/text",{});
+  },300000
+  
+  )})
+  
+
   return (
 <MainContainer>
   <BarContainer>
       <BarContainerHead>
-        <Text size={"40px"} >Emotions</Text>
+        <Text size={"30px"} >Emotions</Text>
         <InfoContainer>
           <Text size={"20px"} > Current Emotion : </Text>
           <Text >{currentMood?.toUpperCase()}</Text>
@@ -40,17 +51,32 @@ function App() {
       <BarGraph>
         <Emotion/>
       </BarGraph>  
+      <Text size={"30px"} >Emotions in Time Series</Text>
+      <LineGraph>
+        <TimeGraph/>
+      </LineGraph>
   </BarContainer>
 
   <TextContainer>
-    <Text style={{marginBottom: "10px"}}>Topics</Text>
+    <Text style={{marginBottom: "10px"}} size={"30px"}>Topics</Text>
       <TextBox>
-    {textData?.map((data:any)=><> <ListContainer><Text size={"12px"}>{data.Topic1}</Text></ListContainer>
+    {textData?.map((data:any)=><>  
+    
+    <ListContainer><Text size={"12px"}>{data.Topic1}</Text></ListContainer>
     <ListContainer><Text size={"12px"}>{data.Topic2}</Text></ListContainer>
-    <ListContainer><Text size={"12px"}>{data.Topic3}</Text></ListContainer></>)}
+    <ListContainer><Text size={"12px"}>{data.Topic3}</Text></ListContainer>
+    
+    </>)}
       </TextBox>
+    <Text size={"30px"} >Sentiment</Text> 
+    <BarGraph>
+      <Sentiment/>
+    </BarGraph>
   </TextContainer>
+
+
 </MainContainer>
+
   );
 }
 
@@ -58,11 +84,11 @@ function App() {
 
 const MainContainer = styled.div`
   margin: 0;
+  margin-top: 20px
   padding:0;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   box-sizing: border-box;
-  background-color: #F0F0F5;
   display:flex;
   @media (max-width: 720px) {
     flex-direction: column;
@@ -71,55 +97,69 @@ const MainContainer = styled.div`
 
 const BarContainer = styled.div`
   height:100%;
-  min-width:60%;
+  min-width:50%;
   display: flex;
   flex-direction: column;
   justify-content:center;
   align-items:center;
+  
 `;
 
 const BarContainerHead = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: flex-start;
+  align-items: flex-center;
   min-width: 80%;
   height: 15%;
+  margin-top:10px
 `;
 
 const InfoContainer = styled.div`
   height: 25%;
   width: 100%;
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-center;
   align-items: center;
   @media (max-width: 720px) {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+
   }
 `;
 
 const BarGraph = styled.section`
   background-color: #ffff;
   width: 80%;
+  border-radius:10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+const LineGraph = styled.section`  
+background-color: #ffff;
+width: 80%;
+border-radius:10px;
+margin-top: 20px;
+margin-bottom: 20px;
 `;
 
 const TextContainer = styled.div`
-  height: 100%;
-  width: 40%;
+  min-width: 50%;
   display: flex;
   flex-direction: column;
   justify-content:flex-start;
-  align-items: flex-start;
+  align-items: center;
   margin-top:16px;
+  border-radius:10px;
   @media (max-width: 720px) {
    min-width: 100%;
-   margin-left: 60px;
+  
   }
 `;
 
 const TextBox = styled.div`
-  height:80%;
-  width: 60%;
+  height: 250px;
+  width: 80%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -127,6 +167,11 @@ const TextBox = styled.div`
   flex-direction: column;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   padding-top: 50px;
+  border-radius:10px;
+  margin: 20px 0;
+  @media (max-width : 720px){
+    height:150px;
+  }
 
 `;
 
@@ -151,6 +196,7 @@ const Text = styled.p<Custom>`
   margin: 0;
   margin-right: 10px;
   text-align: center;
+  margin-bottom: 10px;
 `;
 
 

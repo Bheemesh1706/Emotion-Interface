@@ -5,7 +5,7 @@ const {google} = require('googleapis');
 const { default: axios } = require('axios');
 const cors = require('cors');
 const app = express();
-const port = 3001;
+const port = 3500;
 const Image = require("./model/Image");
 const Text = require("./model/Text"); 
 const DB = "mongodb+srv://bheemesh:5KSVkAqh9DgSdAXZ@emotioninterface.ooq3x.mongodb.net/EmotionInterface?retryWrites=true&w=majority";
@@ -148,7 +148,7 @@ app.post("/text", async (req,res)=>{
         })
         console.log(content_string);
 
-        const response = await fetch("http://43.204.11.138:5000/text", {
+        const response = await fetch("http://43.204.11.138:4000/text", {
           	method: 'post',
 	          body: JSON.stringify({  content_string: content_string }),
 	          headers: {'Content-Type': 'application/json'}
@@ -405,7 +405,8 @@ app.post("/image", async (req,res)=>{
         Happy: Data?.happy,  
         Sad: Data?.sad,
         Surprise: Data?.surprise,
-        Neutral: Data?.neutral
+        Neutral: Data?.neutral,
+	ImageURL: Data?.image
       });
       res.status(200).json({ image_id: createImage._id });
     }

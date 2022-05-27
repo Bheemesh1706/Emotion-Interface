@@ -11,8 +11,8 @@ const schemaImage = new mongoose.Schema({
     Happy: { type : Number, required: true },
     Sad: { type : Number, required: true },
     Surprise: { type : Number, required: true },
-    Neutral: { type : Number, required: true }
-    
+    Neutral: { type : Number, required: true },
+    ImageURL: { type:String, require:true} 
 },
 {
     timestamps: true,  

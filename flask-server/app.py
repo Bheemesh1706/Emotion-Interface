@@ -40,17 +40,17 @@ def image():
 			h = box[3]	
 			photo = img[y:y + h, x:x + w]	
 			cv2.imwrite("/home/ubuntu/Emotion-Interface/flask-server/photo.jpeg", photo)
-			print(res)			
+			print("The image output is redirected to node app.............")
 		except:
 			print("most likely no face in pic")
 
 
-		#with open("photo.jpeg","rb") as img_file:
-			#b64_string = base64.b64encode(img_file.read())
-		#photoInBinary = base64.b64decode(b64_string) 
-		#photo_binary = photoInBinary.decode('utf-8')
-		#print(type(photoInBinary))
-		#print(photo_binary)
+		with open("photo.jpeg","rb") as img_file:
+			b64_string = base64.b64encode(img_file.read())
+		photo_binary = b64_string.decode('utf-8')
+
+		res['image'] = photo_binary
+		#print(res)
 		#print(type(photo_binary))
 		req = requests.post("http://43.204.11.138:3500/image", json=res)
 		return jsonify(res)

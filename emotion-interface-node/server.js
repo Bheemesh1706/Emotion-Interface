@@ -405,7 +405,8 @@ app.post("/image", async (req,res)=>{
         Happy: Data?.happy,  
         Sad: Data?.sad,
         Surprise: Data?.surprise,
-        Neutral: Data?.neutral
+        Neutral: Data?.neutral,
+	ImageURL: Data?.image
       });
       res.status(200).json({ image_id: createImage._id });
     }

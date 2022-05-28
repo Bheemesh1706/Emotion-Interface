@@ -8,6 +8,10 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
+
+import { useEffect } from 'react';
+import { GetAllImageData } from '../api/backend';
+
 import { Line } from 'react-chartjs-2';
 
 ChartJS.register(
@@ -21,7 +25,16 @@ ChartJS.register(
 );
 
 
+
 export function TimeGraph() {
+
+
+   useEffect(()=>{
+    GetAllImageData().then((e)=>{
+           console.log(e);
+    });
+   },[]);
+
      const options = {
         responsive: true,
         plugins: {
@@ -30,13 +43,13 @@ export function TimeGraph() {
           },
           title: {
             display: true,
-            text: 'Chart.js Line Chart',
+            text: 'Line Chart',
           },
           scales: {
             X: {
               type: 'time',
               time: {
-                unit: 'hour'
+                unit: 'minute'
               }
             },
             y: {
@@ -53,13 +66,13 @@ export function TimeGraph() {
         datasets: [
           {
             label: 'Dataset 1',
-            data: [0.2,1,0.4,0.7,0.3,0.9,0.5]         ,
+            data: [0.2,1,0.4,0.7,0.3,0.9,0.5],
             borderColor: 'rgb(255, 99, 132)',
             backgroundColor: 'rgba(255, 99, 132, 0.5)',
           },
           {
             label: 'Dataset 2',
-            data: [0.2,0.3,0.4,1,0.7,0.5,0.9]  ,
+            data: [0.2,0.3,0.4,1,0.7,0.5,0.9],
             borderColor: 'rgb(53, 162, 235)',
             backgroundColor: 'rgba(53, 162, 235, 0.5)',
           },

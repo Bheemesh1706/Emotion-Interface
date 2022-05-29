@@ -90,7 +90,7 @@ function Home() {
 
 const MainContainer = styled.div`
   margin: 0;
-  margin-top: 20px
+  margin-top: 20px;
   padding:0;
   height: 100%;
   width: 100%;

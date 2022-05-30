@@ -667,7 +667,7 @@ app.get("/imagedata", async (req,response)=>{
     }
 
     const Content = async () => {
-      const data = (await Image.find({Id: ID}).sort({_id: -1})) || [];
+      const data = await Image.find({Id: ID}).sort({_id: -1}) ;
       response.send({ data }).status(200);
  
     }

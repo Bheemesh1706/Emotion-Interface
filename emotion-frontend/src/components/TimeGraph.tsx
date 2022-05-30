@@ -38,15 +38,17 @@ export function TimeGraph() {
 
    useEffect(()=>{
     GetAllImageData().then((e)=>{
+              console.log(e);
            e.map((data:any)=>{
-            setAngry((angry:any)=>[...angry,data.angry]);
-            setDisgust((disgust:any)=>[...disgust,data.disgust]);
-            setFear((fear:any)=>[...fear,data.fear]);
-            setHappy((happy:any)=>[...happy,data.happy]);
-            setNeutral((neutral:any)=>[...neutral,data.neutral]);
-            setSad((sad:any)=>[...sad,data.sad]);
-            setSurprise((surprise:any)=>[...surprise,data.surprise]);
-           })
+             console.log(data);
+            setAngry((angry:any)=>[...angry,data.Angry]);
+            setDisgust((disgust:any)=>[...disgust,data.Disgust]);
+            setFear((fear:any)=>[...fear,data.Fear]);
+            setHappy((happy:any)=>[...happy,data.Happy]);
+            setNeutral((neutral:any)=>[...neutral,data.Neutral]);
+            setSad((sad:any)=>[...sad,data.Sad]);
+            setSurprise((surprise:any)=>[...surprise,data.Surprise]);
+           });
     });
    },[]);
 

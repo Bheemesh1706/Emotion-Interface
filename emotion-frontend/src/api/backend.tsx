@@ -18,7 +18,7 @@ export const  Scrapetext =async () => {
 }
 
 export const GetAllImageData = async () =>{
-    const response = await axios.get("http://43.204.11.138:3001/imagedata");
-    console.log(response.data.Images);
-    return response.data.Images;
+    const response = await axios.get("http://localhost:3500/imagedata");
+    console.log(response.data.data);
+    return response.data.data;
 }

@@ -26,7 +26,7 @@ export const GetAllImageData = async () =>{
 }
 
 export const GetSentimentData = async () =>{
-    const response = await axios.get("http://43.204.11.138:3001/Sentiment-id")
+    const response = await axios.get("http://43.204.11.138:3001/Sentiment-id");
     console.log(response.data.data);
     return response.data.data;
 }

@@ -35,38 +35,25 @@ export function TimeGraph() {
    const [disgust,setDisgust] = useState<any>([]);
    const [happy,setHappy] = useState<any>([]);
    const [surprise,setSurprise] = useState<any>([]);
-
-  //  useEffect(()=>{
-  //   GetAllImageData().then((e)=>{
-  //             console.log(e);
-  //          e.map((data:any)=>{
-  //            console.log(data);
-  //           setAngry((angry:any)=>[...angry,data.Angry]);
-  //           setDisgust((disgust:any)=>[...disgust,data.Disgust]);
-  //           setFear((fear:any)=>[...fear,data.Fear]);
-  //           setHappy((happy:any)=>[...happy,data.Happy]);
-  //           setNeutral((neutral:any)=>[...neutral,data.Neutral]);
-  //           setSad((sad:any)=>[...sad,data.Sad]);
-  //           setSurprise((surprise:any)=>[...surprise,data.Surprise]);
-  //          });
-  //   });
-  //  },[]);
-
+   const [id,setID] = useState<String>("");
+   const [label,setLabel] = useState<any>([]);
+ 
    useEffect(()=>{
-     var ID='';
-        GetImageData().then((e)=>{
-          if(ID!=e._id)
-          {
-          setAngry((angry:any)=>[...angry,e.Angry]);
-          setDisgust((disgust:any)=>[...disgust,e.Disgust]);
-          setFear((fear:any)=>[...fear,e.Fear]);
-          setHappy((happy:any)=>[...happy,e.Happy]);
-          setNeutral((neutral:any)=>[...neutral,e.Neutral]);
-          setSad((sad:any)=>[...sad,e.Sad]);
-          setSurprise((surprise:any)=>[...surprise,e.Surprise]);
-          ID=e._id
-          }
-        })
+    GetImageData().then((e)=>{
+      console.log(e)
+      if(id!==e._id)
+      {
+      setAngry((angry:any)=>[...angry,e.Angry]);
+      setDisgust((disgust:any)=>[...disgust,e.Disgust]);
+      setFear((fear:any)=>[...fear,e.Fear]);
+      setHappy((happy:any)=>[...happy,e.Happy]);
+      setNeutral((neutral:any)=>[...neutral,e.Neutral]);
+      setSad((sad:any)=>[...sad,e.Sad]);
+      setSurprise((surprise:any)=>[...surprise,e.Surprise]);
+      setID(e._id);
+      setLabel((label:any)=>[...label,e.createdAt.split("T")[1].split(".")[0]]);
+      }
+    })
    })
 
      const options = {
@@ -93,7 +80,7 @@ export function TimeGraph() {
         },
       };
       
-      const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+      const labels = label;
       
       const data = {
         labels,

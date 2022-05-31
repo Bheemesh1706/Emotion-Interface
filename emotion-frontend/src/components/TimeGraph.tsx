@@ -10,7 +10,7 @@ import {
 } from 'chart.js';
 
 import { useEffect, useState } from 'react';
-import { GetAllImageData } from '../api/backend';
+import { GetAllImageData ,GetImageData} from '../api/backend';
 
 import { Line } from 'react-chartjs-2';
 
@@ -36,21 +36,38 @@ export function TimeGraph() {
    const [happy,setHappy] = useState<any>([]);
    const [surprise,setSurprise] = useState<any>([]);
 
+  //  useEffect(()=>{
+  //   GetAllImageData().then((e)=>{
+  //             console.log(e);
+  //          e.map((data:any)=>{
+  //            console.log(data);
+  //           setAngry((angry:any)=>[...angry,data.Angry]);
+  //           setDisgust((disgust:any)=>[...disgust,data.Disgust]);
+  //           setFear((fear:any)=>[...fear,data.Fear]);
+  //           setHappy((happy:any)=>[...happy,data.Happy]);
+  //           setNeutral((neutral:any)=>[...neutral,data.Neutral]);
+  //           setSad((sad:any)=>[...sad,data.Sad]);
+  //           setSurprise((surprise:any)=>[...surprise,data.Surprise]);
+  //          });
+  //   });
+  //  },[]);
+
    useEffect(()=>{
-    GetAllImageData().then((e)=>{
-              console.log(e);
-           e.map((data:any)=>{
-             console.log(data);
-            setAngry((angry:any)=>[...angry,data.Angry]);
-            setDisgust((disgust:any)=>[...disgust,data.Disgust]);
-            setFear((fear:any)=>[...fear,data.Fear]);
-            setHappy((happy:any)=>[...happy,data.Happy]);
-            setNeutral((neutral:any)=>[...neutral,data.Neutral]);
-            setSad((sad:any)=>[...sad,data.Sad]);
-            setSurprise((surprise:any)=>[...surprise,data.Surprise]);
-           });
-    });
-   },[]);
+     var ID='';
+        GetImageData().then((e)=>{
+          if(ID!=e._id)
+          {
+          setAngry((angry:any)=>[...angry,e.Angry]);
+          setDisgust((disgust:any)=>[...disgust,e.Disgust]);
+          setFear((fear:any)=>[...fear,e.Fear]);
+          setHappy((happy:any)=>[...happy,e.Happy]);
+          setNeutral((neutral:any)=>[...neutral,e.Neutral]);
+          setSad((sad:any)=>[...sad,e.Sad]);
+          setSurprise((surprise:any)=>[...surprise,e.Surprise]);
+          ID=e._id
+          }
+        })
+   })
 
      const options = {
         responsive: true,

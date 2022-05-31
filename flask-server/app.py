@@ -9,10 +9,11 @@ from fer import FER
 import cv2
 import requests
 import ldadeployment
+from sklearn.linear_model import LogisticRegression
+
+
 
 app = Flask(__name__)
-
-
 
 @app.route('/image',methods=['POST'])
 def image():
@@ -77,6 +78,24 @@ def text():
         
 	else:
 		abort(400)
+
+@app.route('/sentiment',methods=['POST'])
+def sentiment():
+
+	if request.method == "POST":
+		data = request.json		
+		try:
+			sentiment = ldadeployment.create_reg(data["content_string"])
+			print(sentiment)
+		except Exception as e:
+			print(e)
+		senti_req = requests.post("http://43.204.11.138:3500/sentiment", json=sentiment)
+
+		return jsonify(data)
+        
+	else:
+		abort(400)
+
 
 
 if __name__ == '__main__':

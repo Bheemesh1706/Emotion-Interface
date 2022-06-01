@@ -6,15 +6,15 @@ const schemaSentiment = new mongoose.Schema({
         required: true
     },
     Happy: {
-        type: String,
+        type: Number,
         require: true
     },
     Neutral: {
-        type: String,
+        type: Number,
         require: true
     },
     Sad: {
-        type: String,
+        type: Number,
         require: true
     }
 });

@@ -2,7 +2,7 @@ import { NavLink as Link } from 'react-router-dom';
 import styled from "styled-components";
 import Emotion from "../components/Emotion";
 import TimeGraph from "../components/TimeGraph";
-import Sentiment from "../components/Sentiment";
+import Sentiment from "../components/SentimentComp";
 import { Custom } from "../components/Interface";
 import { useState, useEffect } from "react";
 import { GetTextData, GetImageData } from "../api/backend";

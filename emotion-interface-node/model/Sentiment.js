@@ -5,14 +5,18 @@ const schemaSentiment = new mongoose.Schema({
         type: String,
         required: true
     },
-    Happy: { type : Number, required: true },
-    Neutral: { type : Number, required: true },
-    Sad: { type : Number, required: true },
-
-},
-{
-    timestamps: true,  
-}
-);
+    Happy: {
+        type: String,
+        require: true
+    },
+    Neutral: {
+        type: String,
+        require: true
+    },
+    Sad: {
+        type: String,
+        require: true
+    }
+});
 
 module.exports = mongoose.model("Sentiment", schemaSentiment);

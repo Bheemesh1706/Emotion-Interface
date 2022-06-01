@@ -81,16 +81,14 @@ def text():
 
 @app.route('/sentiment',methods=['POST'])
 def sentiment():
-
 	if request.method == "POST":
-		data = request.json		
+		data = request.json	
 		try:
-			sentiment = ldadeployment.create_reg(data["content_string"])
-			print(sentiment)
+			result_senti = ldadeployment.create_reg(data["content_string"])
+			print(result_senti)
 		except Exception as e:
 			print(e)
-		senti_req = requests.post("http://43.204.11.138:3500/sentiment", json=sentiment)
-
+		senti_req = requests.post("http://43.204.11.138:3500/sentiment", json=result_senti)
 		return jsonify(data)
         
 	else:

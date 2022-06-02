@@ -1,6 +1,7 @@
 import { Bar } from "react-chartjs-2";
 import { useEffect, useState } from "react";
 import { GetSentimentData } from "../api/backend";
+import axios from "axios";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -29,6 +30,16 @@ function SentimentComp() {
       setSenti(e);
     });
   });
+
+  useEffect(() => {
+    setInterval(async () => {
+      const request = await axios.post(
+        "http://43.204.11.138:3001/sentiment",
+        {"Access-Control-Allow-Origin": "*",}
+      );
+    }, 100000);
+  });
+
   const options = {
     responsive: true,
     plugins: {
@@ -49,7 +60,7 @@ function SentimentComp() {
     datasets: [
       {
         label: "Sentiments",
-        data: [senti?.Happy*10,senti?.Neutral*10,senti?.Sad*10],
+        data: [senti?.Happy * 10, senti?.Neutral * 10, senti?.Sad * 10],
         backgroundColor: [
           "rgba(255, 99, 132, 0.5)",
           "rgba(54, 162, 235, 0.5)",

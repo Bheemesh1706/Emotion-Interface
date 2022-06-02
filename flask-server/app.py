@@ -88,7 +88,7 @@ def sentiment():
 			print(result_senti)
 		except Exception as e:
 			print(e)
-		senti_req = requests.post("http://43.204.11.138:3500/sentiment", json=result_senti)
+		senti_req = requests.post("http://43.204.11.138:3500/sentiment-db", json=result_senti)
 		return jsonify(data)
         
 	else:

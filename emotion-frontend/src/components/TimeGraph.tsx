@@ -89,7 +89,7 @@ export function TimeGraph() {
             label: 'Angry',
             data: angry,
             borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            backgroundColor: 'rgba(255, 0, 0, 0.5)',
           },
           {
             label: 'Disgust',
@@ -101,13 +101,13 @@ export function TimeGraph() {
             label: 'Fear',
             data: fear,
             borderColor: 'rgb(153, 102, 255)',
-            backgroundColor: 'rgba(153, 102, 255, 0.5)', 
+            backgroundColor: 'rgba(75, 0, 130, 0.5)', 
           },
           {
             label: 'Happy',
             data: happy,
             borderColor: 'rgb(75, 192, 192)',
-            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            backgroundColor: 'rgba(75, 255, 0, 0.5)',
           },        
           {
             label: 'Sad',

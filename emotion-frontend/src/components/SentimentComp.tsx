@@ -56,9 +56,9 @@ function SentimentComp() {
           "rgba(153, 102, 255, 0.5)",
         ],
         borderColor: [
+          "rgb(255, 99, 132)",
           "rgb(54, 162, 235)",
           "rgb(153, 102, 255)",
-          "rgb(201, 203, 207)",
         ],
         borderWidth: 1,
       },

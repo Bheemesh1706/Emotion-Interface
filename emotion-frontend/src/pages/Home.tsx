@@ -32,13 +32,13 @@ function Home() {
   useEffect(() => {
     setInterval(() => {
       const request = axios.post("http://43.204.11.138:3001/text", {});
-    }, 120000);
+    }, 60000);
   }, []);
 
   useEffect(() => {
     setInterval(() => {
       const request1 = axios.post("http://43.204.11.138:3001/sentiment", {});
-    }, 15000);
+    }, 10000);
   }, []);
 
   return (

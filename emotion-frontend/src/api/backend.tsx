@@ -10,17 +10,17 @@ export const GetTextData = async () => {
 };
 export const GetSentimentData = async () => {
   const response = await axios.get("http://43.204.11.138:3001/sentiment-id");
-  console.log(response.data.data);
   return response.data.data[0];
 };
-export const Scrapetext = async () => {
-  const response = await axios.post("http://43.204.11.138:3001/text", {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
-  });
-};
+// export const Scrapetext = async () => {
+//   const response = await axios.post("http://43.204.11.138:3001/text", {
+//     headers: {
+//       "Access-Control-Allow-Origin": "*",
+//     },
+//   });
+// };
 export const GetAllImageData = async () => {
   const response = await axios.get("http://43.204.11.138:3500/imagedata");
   return response.data.data;
 };
+

@@ -1,7 +1,6 @@
 import { Bar } from "react-chartjs-2";
 import { useEffect, useState } from "react";
 import { GetSentimentData } from "../api/backend";
-import axios from "axios";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -26,18 +25,8 @@ function SentimentComp() {
 
   useEffect(() => {
     GetSentimentData().then((e) => {
-      console.log(e);
       setSenti(e);
     });
-  });
-
-  useEffect(() => {
-    setInterval(async () => {
-      const request = await axios.post(
-        "http://43.204.11.138:3001/sentiment",
-        {"Access-Control-Allow-Origin": "*",}
-      );
-    }, 100000);
   });
 
   const options = {
@@ -75,7 +64,7 @@ function SentimentComp() {
       },
     ],
   };
-  console.log(senti?.Happy);
+
   return <Bar options={options} data={data} />;
 }
 

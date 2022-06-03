@@ -1,4 +1,4 @@
-import { NavLink as Link } from 'react-router-dom';
+import { NavLink as Link } from "react-router-dom";
 import styled from "styled-components";
 import Emotion from "../components/Emotion";
 import TimeGraph from "../components/TimeGraph";
@@ -30,10 +30,16 @@ function Home() {
   }, [graphdata]);
 
   useEffect(() => {
-    setInterval(async () => {
-      const request = await axios.post("http://43.204.11.138:3001/text", {});
-    }, 300000);
-  });
+    setInterval(() => {
+      const request = axios.post("http://43.204.11.138:3001/text", {});
+    }, 15000);
+  }, []);
+
+  useEffect(() => {
+    setInterval(() => {
+      const request = axios.post("http://43.204.11.138:3001/sentiment", {});
+    }, 5000);
+  }, []);
 
   return (
     <MainContainer>
@@ -48,9 +54,9 @@ function Home() {
         <BarGraph>
           <Emotion />
         </BarGraph>
-        <Link to="/emotion">
+        {/* <Link to="/emotion">
           <Button >more details</Button>
-        </Link>        
+        </Link>         */}
         <Text size={"30px"}>Emotions in Time Series</Text>
         <LineGraph>
           <TimeGraph />
@@ -80,9 +86,9 @@ function Home() {
         <BarGraph>
           <Sentiment />
         </BarGraph>
-        <Link to="/sentiment">
+        {/* <Link to="/sentiment">
           <Button >more details</Button>
-        </Link>  
+        </Link>   */}
       </TextContainer>
     </MainContainer>
   );
@@ -91,11 +97,11 @@ function Home() {
 const MainContainer = styled.div`
   margin: 0;
   margin-top: 20px;
-  padding:0;
+  padding: 0;
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  display:flex;
+  display: flex;
   @media (max-width: 720px) {
     flex-direction: column;
   }
@@ -213,5 +219,3 @@ const Button = styled.button`
 `;
 
 export default Home;
-
-

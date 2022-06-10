@@ -7,6 +7,7 @@ import { Custom } from "../components/Interface";
 import { useState, useEffect } from "react";
 import { GetTextData, GetImageData } from "../api/backend";
 import axios from "axios";
+
 function Home() {
   const [textData, setTextData] = useState([]);
   const [graphdata, setGraphData] = useState<any>();
@@ -41,6 +42,15 @@ function Home() {
     }, 10000);
   }, []);
 
+  const [imgUrl, setImgUrl] = useState<any>();
+
+  useEffect(() => {
+    GetImageData().then((e) => {
+      console.log(e);
+      setImgUrl(e);
+    });
+  });
+
   return (
     <MainContainer>
       <BarContainer>
@@ -49,6 +59,12 @@ function Home() {
           <InfoContainer>
             <Text size={"20px"}> Current Emotion : </Text>
             <Text>{currentMood?.toUpperCase()}</Text>
+            <Text>{}</Text>
+            <img
+              src={"data:image/jpeg;base64," + imgUrl?.ImageURL}
+              width="70px"
+              height="80px"
+            />
           </InfoContainer>
         </BarContainerHead>
         <BarGraph>
@@ -71,13 +87,20 @@ function Home() {
           {textData?.map((data: any) => (
             <>
               <ListContainer>
-                <Text size={"12px"}>{data.Topic1}</Text>
+                <Text></Text>
+                <Text size={"16px"}>
+                  {data.createdAt.split("T")[1].split(".")[0]} - {data.Topic1}
+                </Text>
               </ListContainer>
               <ListContainer>
-                <Text size={"12px"}>{data.Topic2}</Text>
+                <Text size={"16px"}>
+                  {data.createdAt.split("T")[1].split(".")[0]} - {data.Topic2}
+                </Text>
               </ListContainer>
               <ListContainer>
-                <Text size={"12px"}>{data.Topic3}</Text>
+                <Text size={"16px"}>
+                  {data.createdAt.split("T")[1].split(".")[0]} - {data.Topic3}
+                </Text>
               </ListContainer>
             </>
           ))}

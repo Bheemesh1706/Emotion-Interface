@@ -3,10 +3,12 @@ import styled from "styled-components";
 import Emotion from "../components/Emotion";
 import TimeGraph from "../components/TimeGraph";
 import Sentiment from "../components/SentimentComp";
+import DateTime from "../components/DateTime";
 import { Custom } from "../components/Interface";
 import { useState, useEffect } from "react";
 import { GetTextData, GetImageData } from "../api/backend";
 import axios from "axios";
+
 
 function Home() {
   const [textData, setTextData] = useState([]);
@@ -51,76 +53,88 @@ function Home() {
     });
   });
 
-  return (
-    <MainContainer>
-      <BarContainer>
-        <BarContainerHead>
-          <Text size={"30px"}>Emotions</Text>
-          <InfoContainer>
-            <Text size={"20px"}> Current Emotion : </Text>
-            <Text>{currentMood?.toUpperCase()}</Text>
-            <Text>{}</Text>
-            <img
-              src={"data:image/jpeg;base64," + imgUrl?.ImageURL}
-              width="70px"
-              height="80px"
-            />
-          </InfoContainer>
-        </BarContainerHead>
-        <BarGraph>
-          <Emotion />
-        </BarGraph>
-        {/* <Link to="/emotion">
-          <Button >more details</Button>
-        </Link>         */}
-        <Text size={"30px"}>Emotions in Time Series</Text>
-        <LineGraph>
-          <TimeGraph />
-        </LineGraph>
-      </BarContainer>
+//   <NavBar>
+//   {/* <Text> Welcome to the Multimodal AI Engine Dashboard !!!</Text> */}
+// </NavBar>
 
-      <TextContainer>
-        <Text style={{ marginBottom: "10px" }} size={"30px"}>
-          Topics
-        </Text>
-        <TextBox>
-          {textData?.map((data: any) => (
-            <>
-              <ListContainer>
-                <Text></Text>
-                <Text size={"16px"}>
-                  {data.createdAt.split("T")[1].split(".")[0]} - {data.Topic1}
-                </Text>
-              </ListContainer>
-              <ListContainer>
-                <Text size={"16px"}>
-                  {data.createdAt.split("T")[1].split(".")[0]} - {data.Topic2}
-                </Text>
-              </ListContainer>
-              <ListContainer>
-                <Text size={"16px"}>
-                  {data.createdAt.split("T")[1].split(".")[0]} - {data.Topic3}
-                </Text>
-              </ListContainer>
-            </>
-          ))}
-        </TextBox>
-        <Text size={"30px"}>Sentiment</Text>
-        <BarGraph>
-          <Sentiment />
-        </BarGraph>
-        {/* <Link to="/sentiment">
-          <Button >more details</Button>
-        </Link>   */}
-      </TextContainer>
-    </MainContainer>
+  return (
+    <>
+
+      <MainContainer>
+        <SideBar>
+          <DateTime></DateTime>
+        </SideBar>
+
+
+        <BarContainer>
+          <BarContainerHead>
+   
+            <InfoContainer>
+              <Text size={"20px"}> Current Emotion : </Text>
+              <Text>{currentMood?.toUpperCase()}</Text>
+              <Text>{ }</Text>
+              <img
+                src={"data:image/jpeg;base64," + imgUrl?.ImageURL}
+                width="70px"
+                height="80px"
+              />
+            </InfoContainer>
+          </BarContainerHead>
+          <BarGraph>
+            <Emotion />
+          </BarGraph>
+          {/* <Link to="/emotion">
+            <Button >more details</Button>
+          </Link>         */}
+          <Text size={"30px"}>Emotions in Time Series</Text>
+          <LineGraph>
+            <TimeGraph />
+          </LineGraph>
+        </BarContainer>
+
+        <TextContainer>
+          <Text style={{ marginBottom: "10px", marginTop: "80px" }} size={"30px"}>
+            Topics
+          </Text>
+          <TextBox>
+            {textData?.map((data: any) => (
+              <>
+                <ListContainer>
+                  <Text></Text>
+                  <Text size={"16px"}>
+                    {data.createdAt.split("T")[1].split(".")[0]} - {data.Topic1}
+                  </Text>
+                </ListContainer>
+                <ListContainer>
+                  <Text size={"16px"}>
+                    {data.createdAt.split("T")[1].split(".")[0]} - {data.Topic2}
+                  </Text>
+                </ListContainer>
+                <ListContainer>
+                  <Text size={"16px"}>
+                    {data.createdAt.split("T")[1].split(".")[0]} - {data.Topic3}
+                  </Text>
+                </ListContainer>
+              </>
+            ))}
+          </TextBox>
+          <Text size={"30px"}>Sentiment</Text>
+          <BarGraph>
+            <Sentiment />
+          </BarGraph>
+          {/* <Link to="/sentiment">
+            <Button >more details</Button>
+          </Link>   */}
+        </TextContainer>
+
+      </MainContainer>
+    </>
   );
 }
 
 const MainContainer = styled.div`
   margin: 0;
-  margin-top: 20px;
-  padding: 0;
+  // margin-top: 40px;
   height: 100%;
   width: 100%;
   box-sizing: border-box;
@@ -129,10 +143,9 @@ const MainContainer = styled.div`
     flex-direction: column;
   }
 `;
-
 const BarContainer = styled.div`
   height: 100%;
-  min-width: 50%;
+  min-width: 40%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -177,33 +190,29 @@ const LineGraph = styled.section`
 `;
 
 const TextContainer = styled.div`
-  min-width: 50%;
+  min-width:40%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   margin-top: 16px;
   border-radius: 10px;
-  @media (max-width: 720px) {
-    min-width: 100%;
-  }
 `;
 
 const TextBox = styled.div`
-  height: 250px;
-  width: 80%;
+  height: 210px;
+  width: 80%;                                               
   display: flex;
   justify-content: flex-start;
   align-items: center;
   background-color: #ffffff;
   flex-direction: column;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  padding-top: 50px;
   border-radius: 10px;
   margin: 20px 0;
-  @media (max-width: 720px) {
-    height: 150px;
+  @media screen and (max-width:540px){
+    height:210px;
   }
+
 `;
 
 const ListContainer = styled.div`
@@ -239,6 +248,36 @@ const Button = styled.button`
   margin: 5px 0px;
   cursor: pointer;
   // align-itemm: left;
+`;
+
+const SideBar = styled.div`
+background:#0D1F2D;
+text-align:center;
+
+color: white;
+  @media(min-width:720px){  
+  height: 100vh;
+  margin-left: 0px;
+  width:20%;
+  font-size: 22px;
+  // margin-top:10px
+  }
+  @media(max-width:719px){
+    height:10vh;
+    width:100%;
+    font-size: 15px;
+  }
+
+`;
+const NavBar = styled.div`
+  background: #f0f0f5;
+  width:100%;
+  height:30px;
+  text-align:centre;
+  font-size: light;
+  padding: 5px 0;
+
+
 `;
 
 export default Home;

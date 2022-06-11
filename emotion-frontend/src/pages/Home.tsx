@@ -251,10 +251,10 @@ const Button = styled.button`
 const SideBar = styled.div`
   background: #0d1f2d;
   text-align: center;
-  min-height: 100vh;
+  
   color: white;
   @media screen and (min-width: 720px) {
-
+    min-height: 100vh;
     margin-left: 0px;
     width: 10%;
     font-size: 12px;

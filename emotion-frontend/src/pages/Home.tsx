@@ -9,7 +9,6 @@ import { useState, useEffect } from "react";
 import { GetTextData, GetImageData } from "../api/backend";
 import axios from "axios";
 
-
 function Home() {
   const [textData, setTextData] = useState([]);
   const [graphdata, setGraphData] = useState<any>();
@@ -53,30 +52,29 @@ function Home() {
     });
   });
 
-//   <NavBar>
-//   {/* <Text> Welcome to the Multimodal AI Engine Dashboard !!!</Text> */}
-// </NavBar>
+  //   <NavBar>
+  //   {/* <Text> Welcome to the Multimodal AI Engine Dashboard !!!</Text> */}
+  // </NavBar>
 
   return (
     <>
-
       <MainContainer>
         <SideBar>
           <DateTime></DateTime>
         </SideBar>
 
-
         <BarContainer>
           <BarContainerHead>
-   
+          <Text size={"30px"}>Emotions</Text>
             <InfoContainer>
               <Text size={"20px"}> Current Emotion : </Text>
               <Text>{currentMood?.toUpperCase()}</Text>
-              <Text>{ }</Text>
+              <Text>{}</Text>
               <img
                 src={"data:image/jpeg;base64," + imgUrl?.ImageURL}
                 width="70px"
                 height="80px"
+                alt="UserPhoto"
               />
             </InfoContainer>
           </BarContainerHead>
@@ -93,7 +91,10 @@ function Home() {
         </BarContainer>
 
         <TextContainer>
-          <Text style={{ marginBottom: "10px", marginTop: "80px" }} size={"30px"}>
+          <Text
+            style={{ marginBottom: "10px", marginTop:"35px"}}
+            size={"30px"}
+          >
             Topics
           </Text>
           <TextBox>
@@ -126,7 +127,6 @@ function Home() {
             <Button >more details</Button>
           </Link>   */}
         </TextContainer>
-
       </MainContainer>
     </>
   );
@@ -145,7 +145,7 @@ const MainContainer = styled.div`
 `;
 const BarContainer = styled.div`
   height: 100%;
-  min-width: 40%;
+  min-width: 45%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -190,29 +190,27 @@ const LineGraph = styled.section`
 `;
 
 const TextContainer = styled.div`
-  min-width:40%;
+  min-width: 45%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin-top: 16px;
   border-radius: 10px;
 `;
 
 const TextBox = styled.div`
   height: 210px;
-  width: 80%;                                               
+  width: 80%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   background-color: #ffffff;
   flex-direction: column;
   border-radius: 10px;
-  margin: 20px 0;
-  @media screen and (max-width:540px){
-    height:210px;
+  margin: 66px 0 20px; 
+  @media screen and (min-width: 720px) {
+    height: 50%;
   }
-
 `;
 
 const ListContainer = styled.div`
@@ -251,33 +249,30 @@ const Button = styled.button`
 `;
 
 const SideBar = styled.div`
-background:#0D1F2D;
-text-align:center;
+  background: #0d1f2d;
+  text-align: center;
+  min-height: 100vh;
+  color: white;
+  @media screen and (min-width: 720px) {
 
-color: white;
-  @media(min-width:720px){  
-  height: 100vh;
-  margin-left: 0px;
-  width:20%;
-  font-size: 22px;
-  // margin-top:10px
+    margin-left: 0px;
+    width: 10%;
+    font-size: 12px;
+    // margin-top:10px
   }
-  @media(max-width:719px){
-    height:10vh;
-    width:100%;
+  @media (max-width: 720px) {
+    height: 15vh;
+    width: 100%;
     font-size: 15px;
   }
-
 `;
 const NavBar = styled.div`
   background: #f0f0f5;
-  width:100%;
-  height:30px;
-  text-align:centre;
+  width: 100%;
+  height: 30px;
+  text-align: centre;
   font-size: light;
   padding: 5px 0;
-
-
 `;
 
 export default Home;

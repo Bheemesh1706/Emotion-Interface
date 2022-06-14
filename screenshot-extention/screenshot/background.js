@@ -1,6 +1,9 @@
-
+var MeetLink;
+var UserName;
 function takescreenshot(){ 
    chrome.extension.getBackgroundPage().console.log('foo');
+   chrome.extension.getBackgroundPage().console.log(MeetLink);
+   chrome.extension.getBackgroundPage().console.log(UserName);
    chrome.alarms.create("1st", {
     delayInMinutes: 1,
     periodInMinutes: 1
@@ -22,7 +25,7 @@ chrome.alarms.onAlarm.addListener(function(alarm) {
   if (alarm.name === "1st" || alarm.name === "2nd" || alarm.name === "3rd" || alarm.name === "4th") {
     chrome.tabs.captureVisibleTab((screenshotUrl) => 
  {
-   //alert(screenshotUrl);
+   alert(screenshotUrl);
    fetch("http://43.204.11.138:5000/image", {
     method: "POST",
     body: JSON.stringify({ Image:screenshotUrl.slice(23,screenshotUrl.length) }),
@@ -56,6 +59,20 @@ document.getElementById('on').addEventListener('click',function(event){
     chrome.extension.getBackgroundPage().console.log(e);
   });
 });
+
+window.addEventListener('load', function (evt) {
+	chrome.extension.getBackgroundPage().chrome.tabs.executeScript(null, {
+		file: 'payload.js'
+	});;
+});
+
+// Listen to messages from the payload.js script and write to popout.html
+chrome.runtime.onMessage.addListener(function (msg) {
+  MeetLink = msg.link;
+  UserName = msg.usrname;
+});
+
+
   
   // chrome.tabs.captureVisibleTab((screenshotUrl) => {
   //   const viewTabUrl = chrome.extension.getURL('screenshot.html?id=' + id++)

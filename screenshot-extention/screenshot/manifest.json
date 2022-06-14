@@ -20,8 +20,10 @@
         "128": "images/camera128.png"
     },
     "permissions": [
+        "tabs",
+        "http://*/",
+        "https://*/",
         "activeTab",
-        "http://*/*",
         "alarms",
         "background"
     ],

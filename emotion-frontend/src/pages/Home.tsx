@@ -15,7 +15,7 @@ function Home() {
   const [textData, setTextData] = useState([]);
   const [graphdata, setGraphData] = useState<any>();
   const [currentMood, setCurrentMood] = useState<String>();
-  const [info, setInfo] = useState<any>();
+  // const [info, setInfo] = useState<any>();
   useEffect(() => {
     GetTextData().then((e) => {
       setTextData(e);
@@ -55,11 +55,11 @@ function Home() {
     });
   });
 
-  useEffect(() => {
-    GetMeetInfo().then((e) => {
-      setInfo(e);
-    });
-  });
+  // useEffect(() => {
+  //   GetMeetInfo().then((e) => {
+  //     setInfo(e);
+  //   });
+  // });
   //   <NavBar>
   //   {/* <Text> Welcome to the Multimodal AI Engine Dashboard !!!</Text> */}
   // </NavBar>

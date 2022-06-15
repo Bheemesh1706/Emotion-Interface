@@ -15,6 +15,7 @@ function Home() {
   const [textData, setTextData] = useState([]);
   const [graphdata, setGraphData] = useState<any>();
   const [currentMood, setCurrentMood] = useState<String>();
+  const [info, setInfo] = useState<any>();
   useEffect(() => {
     GetTextData().then((e) => {
       setTextData(e);
@@ -54,6 +55,11 @@ function Home() {
     });
   });
 
+  useEffect(() => {
+    GetMeetInfo().then((e) => {
+      setInfo(e);
+    });
+  });
   //   <NavBar>
   //   {/* <Text> Welcome to the Multimodal AI Engine Dashboard !!!</Text> */}
   // </NavBar>
@@ -62,21 +68,23 @@ function Home() {
     <>
       <MainContainer>
         <SideBar>
-        <Title1>BI Dashboard</Title1>
+          <Title1>BI Dashboard</Title1>
           <UserImg>
             <img
-              // src={"data:image/jpeg;base64," + imgUrl?.ImageURL}
-              src={dummy}
+              src={"data:image/jpeg;base64," + imgUrl?.ImageURL}
+              // src={dummy}
               width="100px"
               height="110px"
               alt="UserPhoto"
             />
-            <Text>User Name</Text>
           </UserImg>
-          
+          {/* <Text size="16px" style={{paddingTop:"10px"}}>Participants List</Text> */}
+          {/* <p>{info.Participants1}</p>
+          <p>{info.Participants2}</p> */}
+          {/* <Text size="16px">Current Meet ID:</Text> */}
           <DateInfo>
-              <DateTime></DateTime>
-            </DateInfo>
+            <DateTime></DateTime>
+          </DateInfo>
         </SideBar>
 
         <BarContainer>
@@ -263,39 +271,46 @@ const SideBar = styled.div`
   text-align: center;
   display: flex;
   color: white;
-  padding:10px;
+  padding: 10px;
 
-  @media screen and (min-width: 721px) {    
-    flex-direction:column;
+  @media screen and (min-width: 721px) {
+    flex-direction: column;
     // justify-content:flex-start;
     min-height: 100vh;
     margin-left: 0px;
     width: 100%;
     font-size: 12px;
- }
+  }
   @media (max-width: 720px) {
-    flex-direction:row;
+    flex-direction: row;
     width: 100%;
     font-size: 15px;
   }
 `;
 const Title1 = styled.h1`
-  font-size:20px;
-  flex:1;
-  @media (max-width: 720px) {
-    display:none;
-  }
+  font-size: 20px;
 
+  @media (max-width: 720px) {
+    flex:1;
+    display: none;
+  }
 `;
 const UserImg = styled.div`
-  flex:2;
+  // flex:1;
   // justify-content:flex-start;
 `;
-const DateInfo = styled.p`
-  flex:3;
-  text-align:right;
-  padding-right: 40px
+const DateInfo = styled.h4`
+
+@media screen and (min-width: 721px) {
+  text-align:center;
+  padding:10px
+}
+@media (max-width: 720px) {
+  flex:1;
+  text-align: right;
+  padding-right: 20px;
   // justify-content:flex-end;
+}
 `;
 
 export default Home;

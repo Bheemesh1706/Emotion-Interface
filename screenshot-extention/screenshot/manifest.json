@@ -2,12 +2,6 @@
     "name": "Screenshot extension",
     "version": "1.0",
     "description": "Building a screenshot taking extension",
-    "background": {
-        "scripts": [
-            "background.js"
-        ],
-        "persistent": true
-    },
     "browser_action": {
         "default_icon": "camera.png",
         "default_title": "Take a screen shot!",
@@ -25,7 +19,15 @@
         "https://*/",
         "activeTab",
         "alarms",
-        "background"
+        "background",
+        "<all_urls>"
     ],
+    "host_permission":["*://meet.google.com/*"],
+    "background": {
+        "scripts": [
+            "background.js"
+        ],
+        "persistent": true
+    },
     "manifest_version": 2
 }

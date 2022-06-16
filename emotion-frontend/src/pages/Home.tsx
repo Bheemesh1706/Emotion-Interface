@@ -1,4 +1,4 @@
-// import { NavLink as Link } from "react-router-dom";
+import { NavLink as Link } from "react-router-dom";
 import styled from "styled-components";
 import Emotion from "../components/Emotion";
 import TimeGraph from "../components/TimeGraph";
@@ -6,16 +6,17 @@ import Sentiment from "../components/SentimentComp";
 import DateTime from "../components/DateTime";
 import { Custom } from "../components/Interface";
 import { useState, useEffect } from "react";
-import { GetTextData, GetImageData } from "../api/backend";
+import { GetTextData, GetImageData, GetMeetInfo} from "../api/backend";
 import axios from "axios";
-import dummy from "./dummy.jpg";
+// import dummy from "./dummy.jpg";
 import { Title } from "chart.js";
 
 function Home() {
   const [textData, setTextData] = useState([]);
   const [graphdata, setGraphData] = useState<any>();
   const [currentMood, setCurrentMood] = useState<String>();
-  // const [info, setInfo] = useState<any>();
+  const [info, setInfo] = useState<any>();
+  const [imgUrl, setImgUrl] = useState<any>();
   useEffect(() => {
     GetTextData().then((e) => {
       setTextData(e);
@@ -23,7 +24,15 @@ function Home() {
     GetImageData().then((e) => {
       setGraphData(e);
     });
+    GetMeetInfo().then((e) => {
+      console.log(e);
+      setInfo(e);
+    });
+    GetImageData().then((e) => {
+      setImgUrl(e);
+    });
   });
+
   useEffect(() => {
     let max = 0;
     for (const item in graphdata) {
@@ -38,37 +47,16 @@ function Home() {
     setInterval(() => {
       const request = axios.post("http://43.204.11.138:3001/text", {});
     }, 60000);
-  }, []);
-
-  useEffect(() => {
     setInterval(() => {
       const request1 = axios.post("http://43.204.11.138:3001/sentiment", {});
     }, 10000);
   }, []);
 
-  const [imgUrl, setImgUrl] = useState<any>();
-
-  useEffect(() => {
-    GetImageData().then((e) => {
-      console.log(e);
-      setImgUrl(e);
-    });
-  });
-
-  // useEffect(() => {
-  //   GetMeetInfo().then((e) => {
-  //     setInfo(e);
-  //   });
-  // });
-  //   <NavBar>
-  //   {/* <Text> Welcome to the Multimodal AI Engine Dashboard !!!</Text> */}
-  // </NavBar>
-
   return (
     <>
       <MainContainer>
         <SideBar>
-          <Title1>BI Dashboard</Title1>
+          <Title1 >BI Dashboard</Title1>
           <UserImg>
             <img
               src={"data:image/jpeg;base64," + imgUrl?.ImageURL}
@@ -78,10 +66,17 @@ function Home() {
               alt="UserPhoto"
             />
           </UserImg>
-          {/* <Text size="16px" style={{paddingTop:"10px"}}>Participants List</Text> */}
-          {/* <p>{info.Participants1}</p>
-          <p>{info.Participants2}</p> */}
-          {/* <Text size="16px">Current Meet ID:</Text> */}
+
+          <ParticipantListCont> 
+            <Text size="18px">Participants List:</Text> 
+            <Text size="16px">{info?.Participants}</Text>       
+            {/* {info?.map((data: any)=>(<Text>{data?.Participants}</Text>))} */}
+            <Text size="18px">Meet ID: {info?.Link}</Text>
+            <Link to={{pathname: "https://meet.google.com/"}} target="_blank">
+              <Button>Join Now</Button>
+            </Link>
+          </ParticipantListCont>
+
           <DateInfo>
             <DateTime></DateTime>
           </DateInfo>
@@ -99,9 +94,6 @@ function Home() {
           <BarGraph>
             <Emotion />
           </BarGraph>
-          {/* <Link to="/emotion">
-            <Button >more details</Button>
-          </Link>         */}
           <Text size={"30px"}>Emotions in Time Series</Text>
           <LineGraph>
             <TimeGraph />
@@ -141,9 +133,6 @@ function Home() {
           <BarGraph>
             <Sentiment />
           </BarGraph>
-          {/* <Link to="/sentiment">
-            <Button >more details</Button>
-          </Link>   */}
         </TextContainer>
       </MainContainer>
     </>
@@ -163,7 +152,7 @@ const MainContainer = styled.div`
 `;
 const BarContainer = styled.div`
   height: 100%;
-  min-width: 45%;
+  min-width: 40%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -208,7 +197,7 @@ const LineGraph = styled.section`
 `;
 
 const TextContainer = styled.div`
-  min-width: 45%;
+  min-width: 40%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -233,12 +222,12 @@ const TextBox = styled.div`
 
 const ListContainer = styled.div`
   height: 50px;
-  width: 60%;
+  width: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f0f0f5;
-  margin-bottom: 10px;
+  margin-top: 15px;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `;
@@ -255,16 +244,19 @@ const Text = styled.p<Custom>`
   margin-bottom: 10px;
 `;
 
-// const Button = styled.button`
-//   background-color: black;
-//   color: white;
-//   font-size: 20px;
-//   padding: 10px 60px;
-//   border-radius: 5px;
-//   margin: 5px 0px;
-//   cursor: pointer;
-//   // align-itemm: left;
-// `;
+const Button = styled.button`
+  background-color: white;
+  color: black;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin: 5px 0px;
+  cursor: pointer;
+  // align-itemm: left;
+  @media (max-width:720px){
+    display:none;
+  }
+`;
 
 const SideBar = styled.div`
   background: #0d1f2d;
@@ -278,17 +270,18 @@ const SideBar = styled.div`
     // justify-content:flex-start;
     min-height: 100vh;
     margin-left: 0px;
-    width: 100%;
+    min-width: 15%;
     font-size: 12px;
   }
   @media (max-width: 720px) {
     flex-direction: row;
     width: 100%;
     font-size: 15px;
+
   }
 `;
 const Title1 = styled.h1`
-  font-size: 20px;
+  font-size: 30px;
 
   @media (max-width: 720px) {
     flex:1;
@@ -296,14 +289,20 @@ const Title1 = styled.h1`
   }
 `;
 const UserImg = styled.div`
-  // flex:1;
-  // justify-content:flex-start;
+  width:100%;
+  height:120px;
+  // background:#F2F4F3;
+  border-radius:10px;
+  margin-bottom:10px;
+  border: 2px solid black;
+  flex:1;
 `;
 const DateInfo = styled.h4`
 
 @media screen and (min-width: 721px) {
   text-align:center;
-  padding:10px
+  padding:10px;
+  font-size:15px;
 }
 @media (max-width: 720px) {
   flex:1;
@@ -313,4 +312,18 @@ const DateInfo = styled.h4`
 }
 `;
 
+const ParticipantListCont = styled.div`
+// font-family:roboto;
+padding: 10px;
+flex:2;
+width: 90%;
+// color:white;
+border-radius:10px;
+border: 2px solid black;
+// background-color: #F2F4F3;
+// @media screen and (min-width: 720px) {
+//   max-height: 50%;
+// }
+
+`;
 export default Home;

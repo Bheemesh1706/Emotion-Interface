@@ -40,7 +40,6 @@ export function TimeGraph() {
  
    useEffect(()=>{
     GetImageData().then((e)=>{
-      console.log(e)
       if(id!==e._id)
       {
       setAngry((angry:any)=>[...angry,e.Angry]);

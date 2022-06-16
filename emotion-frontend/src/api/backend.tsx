@@ -1,5 +1,8 @@
 import axios from "axios";
-
+export const GetMeetInfo = async () => {
+  const response = await axios.get("http://43.204.11.138:3500/meetinfo");
+  return response.data.data[0];  
+};
 export const GetImageData = async () => {
   const response = await axios.get("http://43.204.11.138:3001/image-id");
   return response.data.data[0];

@@ -1,4 +1,4 @@
-import { NavLink as Link } from "react-router-dom";
+// import { NavLink as Link } from "react-router-dom";
 import styled from "styled-components";
 import Emotion from "../components/Emotion";
 import TimeGraph from "../components/TimeGraph";
@@ -8,11 +8,14 @@ import { Custom } from "../components/Interface";
 import { useState, useEffect } from "react";
 import { GetTextData, GetImageData } from "../api/backend";
 import axios from "axios";
+import dummy from "./dummy.jpg";
+import { Title } from "chart.js";
 
 function Home() {
   const [textData, setTextData] = useState([]);
   const [graphdata, setGraphData] = useState<any>();
   const [currentMood, setCurrentMood] = useState<String>();
+  // const [info, setInfo] = useState<any>();
   useEffect(() => {
     GetTextData().then((e) => {
       setTextData(e);
@@ -52,6 +55,11 @@ function Home() {
     });
   });
 
+  // useEffect(() => {
+  //   GetMeetInfo().then((e) => {
+  //     setInfo(e);
+  //   });
+  // });
   //   <NavBar>
   //   {/* <Text> Welcome to the Multimodal AI Engine Dashboard !!!</Text> */}
   // </NavBar>
@@ -60,22 +68,32 @@ function Home() {
     <>
       <MainContainer>
         <SideBar>
-          <DateTime></DateTime>
+          <Title1>BI Dashboard</Title1>
+          <UserImg>
+            <img
+              src={"data:image/jpeg;base64," + imgUrl?.ImageURL}
+              // src={dummy}
+              width="100px"
+              height="110px"
+              alt="UserPhoto"
+            />
+          </UserImg>
+          {/* <Text size="16px" style={{paddingTop:"10px"}}>Participants List</Text> */}
+          {/* <p>{info.Participants1}</p>
+          <p>{info.Participants2}</p> */}
+          {/* <Text size="16px">Current Meet ID:</Text> */}
+          <DateInfo>
+            <DateTime></DateTime>
+          </DateInfo>
         </SideBar>
 
         <BarContainer>
           <BarContainerHead>
-          <Text size={"30px"}>Emotions</Text>
+            <Text size={"30px"}>Emotions</Text>
             <InfoContainer>
               <Text size={"20px"}> Current Emotion : </Text>
               <Text>{currentMood?.toUpperCase()}</Text>
               <Text>{}</Text>
-              <img
-                src={"data:image/jpeg;base64," + imgUrl?.ImageURL}
-                width="70px"
-                height="80px"
-                alt="UserPhoto"
-              />
             </InfoContainer>
           </BarContainerHead>
           <BarGraph>
@@ -92,7 +110,7 @@ function Home() {
 
         <TextContainer>
           <Text
-            style={{ marginBottom: "10px", marginTop:"35px"}}
+            style={{ marginBottom: "10px", marginTop: "35px" }}
             size={"30px"}
           >
             Topics
@@ -207,9 +225,9 @@ const TextBox = styled.div`
   background-color: #ffffff;
   flex-direction: column;
   border-radius: 10px;
-  margin: 66px 0 20px; 
+  margin: 66px 0 20px;
   @media screen and (min-width: 720px) {
-    height: 50%;
+    max-height: 50%;
   }
 `;
 
@@ -237,42 +255,62 @@ const Text = styled.p<Custom>`
   margin-bottom: 10px;
 `;
 
-const Button = styled.button`
-  background-color: black;
-  color: white;
-  font-size: 20px;
-  padding: 10px 60px;
-  border-radius: 5px;
-  margin: 5px 0px;
-  cursor: pointer;
-  // align-itemm: left;
-`;
+// const Button = styled.button`
+//   background-color: black;
+//   color: white;
+//   font-size: 20px;
+//   padding: 10px 60px;
+//   border-radius: 5px;
+//   margin: 5px 0px;
+//   cursor: pointer;
+//   // align-itemm: left;
+// `;
 
 const SideBar = styled.div`
   background: #0d1f2d;
   text-align: center;
-  
+  display: flex;
   color: white;
-  @media screen and (min-width: 720px) {
+  padding: 10px;
+
+  @media screen and (min-width: 721px) {
+    flex-direction: column;
+    // justify-content:flex-start;
     min-height: 100vh;
     margin-left: 0px;
-    width: 10%;
+    width: 100%;
     font-size: 12px;
-    // margin-top:10px
   }
   @media (max-width: 720px) {
-    height: 15vh;
+    flex-direction: row;
     width: 100%;
     font-size: 15px;
   }
 `;
-const NavBar = styled.div`
-  background: #f0f0f5;
-  width: 100%;
-  height: 30px;
-  text-align: centre;
-  font-size: light;
-  padding: 5px 0;
+const Title1 = styled.h1`
+  font-size: 20px;
+
+  @media (max-width: 720px) {
+    flex:1;
+    display: none;
+  }
+`;
+const UserImg = styled.div`
+  // flex:1;
+  // justify-content:flex-start;
+`;
+const DateInfo = styled.h4`
+
+@media screen and (min-width: 721px) {
+  text-align:center;
+  padding:10px
+}
+@media (max-width: 720px) {
+  flex:1;
+  text-align: right;
+  padding-right: 20px;
+  // justify-content:flex-end;
+}
 `;
 
 export default Home;

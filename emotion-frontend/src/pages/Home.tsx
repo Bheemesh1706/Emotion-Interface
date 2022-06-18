@@ -6,10 +6,8 @@ import Sentiment from "../components/SentimentComp";
 import DateTime from "../components/DateTime";
 import { Custom } from "../components/Interface";
 import { useState, useEffect } from "react";
-import { GetTextData, GetImageData, GetMeetInfo} from "../api/backend";
+import { GetTextData, GetImageData, GetMeetInfo } from "../api/backend";
 import axios from "axios";
-// import dummy from "./dummy.jpg";
-import { Title } from "chart.js";
 
 function Home() {
   const [textData, setTextData] = useState([]);
@@ -25,7 +23,6 @@ function Home() {
       setGraphData(e);
     });
     GetMeetInfo().then((e) => {
-      console.log(e);
       setInfo(e);
     });
     GetImageData().then((e) => {
@@ -56,23 +53,40 @@ function Home() {
     <>
       <MainContainer>
         <SideBar>
-          <Title1 >BI Dashboard</Title1>
+          <Title1>BI Dashboard</Title1>
           <UserImg>
             <img
               src={"data:image/jpeg;base64," + imgUrl?.ImageURL}
-              // src={dummy}
               width="100px"
               height="110px"
               alt="UserPhoto"
             />
           </UserImg>
 
-          <ParticipantListCont> 
-            <Text size="18px">Participants List:</Text> 
-            <Text size="16px">{info?.Participants}</Text>       
-            {/* {info?.map((data: any)=>(<Text>{data?.Participants}</Text>))} */}
-            <Text size="18px">Meet ID: {info?.Link}</Text>
-            <Link to={{pathname: "https://meet.google.com/"}} target="_blank">
+          <ParticipantListCont>
+            <Text style={{ textAlign: "left" }} size="20px">
+              Participants List:
+            </Text>
+            {info?.Participants.map((data: any, index: any) => (
+              <>
+                <Text
+                  style={{
+                    textAlign: "left",
+                    padding: "10px",
+                    background: "#313638",
+                    border: "1px solid black",
+                    borderRadius: "5px"
+                  }}
+                  size="16px"
+                  key={index}
+                >
+                  {data}
+                </Text>
+              </>
+            ))}
+            <Text style={{ textAlign: "left" }} size="18px">Meet ID:  {info?.Link}</Text>
+            <Text style={{ textAlign: "center" }} size="14px">Click the below button to join the current google meet.</Text>
+            <Link to={{ pathname: "https://meet.google.com/"+info?.Link}} target="_blank">
               <Button>Join Now</Button>
             </Link>
           </ParticipantListCont>
@@ -253,8 +267,8 @@ const Button = styled.button`
   margin: 5px 0px;
   cursor: pointer;
   // align-itemm: left;
-  @media (max-width:720px){
-    display:none;
+  @media (max-width: 720px) {
+    display: none;
   }
 `;
 
@@ -277,53 +291,50 @@ const SideBar = styled.div`
     flex-direction: row;
     width: 100%;
     font-size: 15px;
-
   }
 `;
 const Title1 = styled.h1`
   font-size: 30px;
 
   @media (max-width: 720px) {
-    flex:1;
+    flex: 1;
     display: none;
   }
 `;
 const UserImg = styled.div`
-  width:100%;
-  height:120px;
+  width: 100%;
+  height: 120px;
   // background:#F2F4F3;
-  border-radius:10px;
-  margin-bottom:10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
   border: 2px solid black;
-  flex:1;
+  flex: 1;
 `;
 const DateInfo = styled.h4`
-
-@media screen and (min-width: 721px) {
-  text-align:center;
-  padding:10px;
-  font-size:15px;
-}
-@media (max-width: 720px) {
-  flex:1;
-  text-align: right;
-  padding-right: 20px;
-  // justify-content:flex-end;
-}
+  @media screen and (min-width: 721px) {
+    text-align: center;
+    padding: 10px;
+    font-size: 15px;
+  }
+  @media (max-width: 720px) {
+    flex: 1;
+    text-align: right;
+    padding-right: 20px;
+    // justify-content:flex-end;
+  }
 `;
 
 const ParticipantListCont = styled.div`
-// font-family:roboto;
-padding: 10px;
-flex:2;
-width: 90%;
-// color:white;
-border-radius:10px;
-border: 2px solid black;
-// background-color: #F2F4F3;
-// @media screen and (min-width: 720px) {
-//   max-height: 50%;
-// }
-
+  // font-family:roboto;
+  padding: 10px;
+  flex: 2;
+  width: 90%;
+  // color:white;
+  border-radius: 10px;
+  border: 2px solid black;
+  // background-color: #F2F4F3;
+  // @media screen and (min-width: 720px) {
+  //   max-height: 50%;
+  // }
 `;
 export default Home;

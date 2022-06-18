@@ -2,7 +2,6 @@
 var UserName = [];
 function takescreenshot() {
   chrome.extension.getBackgroundPage().console.log("foo");
-
   chrome.alarms.create("1st", {
     delayInMinutes: 1,
     periodInMinutes: 1,
@@ -46,8 +45,31 @@ function takescreenshot() {
     }
   });
 }
-
 document.getElementById("on").addEventListener("click", function (event) {
+  chrome.extension.getBackgroundPage().chrome.tabs.executeScript(null, {
+    file: "payload.js",
+  });  
+// Listen to messages from the payload.js script and write to popout.html
+chrome.runtime.onMessage.addListener(function (msg) {
+  MeetLink = msg.link;
+  UserName = msg.usrname;
+
+  chrome.extension.getBackgroundPage().console.log(MeetLink);
+  chrome.extension.getBackgroundPage().console.log(UserName);
+  
+  fetch("http://43.204.11.138:3500/meetinfo", {
+    method: "POST",
+    body: JSON.stringify({
+      link: MeetLink,
+      usrname: UserName
+    }),
+    headers: {
+      "Content-type": "application/json; charset=UTF-8",
+    },
+  })
+    .then((response) => response.json())
+    .then((json) => chrome.extension.getBackgroundPage().console.log(json));
+});
   takescreenshot();
 });
 
@@ -66,36 +88,7 @@ document.getElementById("off").addEventListener("click", function () {
   });
 });
 
-window.addEventListener("load", function (evt) {
-  chrome.extension.getBackgroundPage().chrome.tabs.executeScript(null, {
-    file: "payload.js",
-  });
-});
 
-// Listen to messages from the payload.js script and write to popout.html
-chrome.runtime.onMessage.addListener(function (msg) {
-  MeetLink = msg.link;
-  UserName = msg.usrname;
-
-  chrome.extension.getBackgroundPage().console.log(MeetLink);
-  chrome.extension.getBackgroundPage().console.log(UserName);
-  fetch("http://43.204.11.138:3500/meetinfo", {
-    method: "POST",
-    body: JSON.stringify({
-      link: MeetLink,
-      usrname: UserName
-    }),
-    headers: {
-      "Content-type": "application/json; charset=UTF-8",
-    },
-  })
-    .then((response) => response.json())
-    .then((json) => chrome.extension.getBackgroundPage().console.log(json));
-
-  // chrome.extension.getBackgroundPage().console.log(MeetLink);
-  // chrome.extension.getBackgroundPage().console.log(UserName);
-  // chrome.extension.getBackgroundPage().console.log(UserName1);
-});
 
 // chrome.tabs.captureVisibleTab((screenshotUrl) => {
 //   const viewTabUrl = chrome.extension.getURL('screenshot.html?id=' + id++)

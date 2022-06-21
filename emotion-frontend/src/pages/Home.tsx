@@ -57,8 +57,8 @@ function Home() {
           <UserImg>
             <img
               src={"data:image/jpeg;base64," + imgUrl?.ImageURL}
-              width="100px"
-              height="110px"
+              width="130px"
+              height="140px"
               alt="UserPhoto"
             />
           </UserImg>
@@ -75,7 +75,7 @@ function Home() {
                     padding: "10px",
                     background: "#313638",
                     border: "1px solid black",
-                    borderRadius: "5px"
+                    borderRadius: "5px",
                   }}
                   size="16px"
                   key={index}
@@ -84,9 +84,16 @@ function Home() {
                 </Text>
               </>
             ))}
-            <Text style={{ textAlign: "left" }} size="18px">Meet ID:  {info?.Link}</Text>
-            <Text style={{ textAlign: "center" }} size="14px">Click the below button to join the current google meet.</Text>
-            <Link to={{ pathname: "https://meet.google.com/"+info?.Link}} target="_blank">
+            <Text style={{ textAlign: "left" }} size="18px">
+              Meet ID: {info?.Link}
+            </Text>
+            <JoinInfo style={{ textAlign: "center" }}>
+              Click the below button to join the current google meet.
+            </JoinInfo>
+            <Link
+              to={{ pathname: "https://meet.google.com/" + info?.Link }}
+              target="_blank"
+            >
               <Button>Join Now</Button>
             </Link>
           </ParticipantListCont>
@@ -336,5 +343,17 @@ const ParticipantListCont = styled.div`
   // @media screen and (min-width: 720px) {
   //   max-height: 50%;
   // }
+`;
+const JoinInfo = styled.p`
+  font-family: "Roboto";
+  font-weight: medium;
+  font-size: 16px;
+  margin: 0;
+  margin-right: 10px;
+  text-align: center;
+  margin-bottom: 10px;
+  @media (max-width: 720px) {
+    display: none;
+  }
 `;
 export default Home;
